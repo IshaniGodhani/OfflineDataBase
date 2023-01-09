@@ -1,8 +1,10 @@
 package com.example.offlinedatabase;
 
+import androidx.activity.OnBackPressedCallback;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -21,7 +23,8 @@ public class MainActivity2 extends AppCompatActivity {
     PhonebookAdapter phonebookAdapter;
     ArrayList<String> Name =new ArrayList<String>();
     ArrayList<String> Contact =new ArrayList<String>();
-
+    ArrayList<Integer> Id = new ArrayList<Integer>();
+    //int[] Id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,22 +37,34 @@ public class MainActivity2 extends AppCompatActivity {
         listView=findViewById(R.id.list_item);
         btnDisplay=findViewById(R.id.btnDisplay);
 
-        Name=getIntent().getStringArrayListExtra("Name");
-        Contact=getIntent().getStringArrayListExtra("Contact");
+        DBHelper dbHelper=new DBHelper(MainActivity2.this);
+        Cursor cursor=dbHelper.viewData();
+        while (cursor.moveToNext())
+        {
+            Id.add(cursor.getInt(0));
+            Name.add(cursor.getString(1));
+            Contact.add(cursor.getString(2));
+        }
+
+//        Id=getIntent().getIntArrayExtra("id");
+//        Name=getIntent().getStringArrayListExtra("Name");
+//        Contact=getIntent().getStringArrayListExtra("Contact");
 
 
-        phonebookAdapter=new PhonebookAdapter(this,Name,Contact);
+        phonebookAdapter=new PhonebookAdapter(this,Name,Contact,Id);
         listView.setAdapter(phonebookAdapter);
 
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 Intent intent=new Intent(MainActivity2.this,MainActivity.class);
                 String str1=etxtName.getText().toString();
                 String str2=etxtContact.getText().toString();
 
             }
         });
+
 
 
 

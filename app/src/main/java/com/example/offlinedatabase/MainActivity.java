@@ -15,9 +15,6 @@ public class MainActivity extends AppCompatActivity {
 
     EditText etxtName,etxtContact;
     Button btnSubmit, btnDisplay;
-    ArrayList<Integer> Id=new ArrayList<Integer>();
-    ArrayList<String> Name=new ArrayList<String>();
-    ArrayList<String> Contact=new ArrayList<String>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         etxtName=findViewById(R.id.etxtName);
         etxtContact=findViewById(R.id.etxtContact);
+
 
 
         findViewById(R.id.btnSubmit).setOnClickListener(new View.OnClickListener() {
@@ -43,17 +41,8 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                DBHelper dbHelper=new DBHelper(MainActivity.this);
-                Cursor cursor=dbHelper.viewData();
-                while (cursor.moveToNext())
-                {
-                    Id.add(cursor.getInt(0));
-                    Name.add(cursor.getString(1));
-                    Contact.add(cursor.getString(2));
-                }
+
                 Intent intent=new Intent(MainActivity.this,MainActivity2.class);
-                intent.putExtra("Name",Name);
-                intent.putExtra("Contact",Contact);
                 startActivity(intent);
 
             }

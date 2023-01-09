@@ -56,6 +56,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:gravity="center_vertical"
+                android:id="@+id/menu"
                 android:src="@drawable/ic_baseline_menu_24">
 
             </ImageView>

@@ -7,6 +7,8 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import androidx.annotation.Nullable;
 
+import java.util.ArrayList;
+
 public class DBHelper extends SQLiteOpenHelper
 {
 
@@ -42,5 +44,18 @@ public class DBHelper extends SQLiteOpenHelper
         sqLiteDatabase=getReadableDatabase();
         Cursor cursor=sqLiteDatabase.rawQuery(query,null);
         return cursor;
+    }
+
+    public void deleteData(int Id)
+    {
+        System.out.println("db helper method called id="+Id);
+        String query="delete from PhoneBook where id='"+Id+"'";
+        SQLiteDatabase sqLiteDatabase=getWritableDatabase();
+        sqLiteDatabase.execSQL(query);
+
+    }
+    public void updateData()
+    {
+
     }
 }
