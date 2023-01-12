@@ -18,25 +18,24 @@ import java.util.ArrayList;
 public class PhonebookAdapter extends BaseAdapter {
 
     Activity activity;
-    ArrayList<String> Name=new ArrayList<String>();
-    ArrayList<String> Contact=new ArrayList<String>();
-    ArrayList<Integer> Id=new ArrayList<Integer>();
+//    ArrayList<String> Name=new ArrayList<String>();
+//    ArrayList<String> Contact=new ArrayList<String>();
+//    ArrayList<Integer> Id=new ArrayList<Integer>();
     TextView txt1,txt2;
     ImageView menu;
     ListView listView;
+    ArrayList<User> userList;
 
 
-    public PhonebookAdapter(Activity activity, ArrayList<String> name, ArrayList<String> contact, ArrayList<Integer> id) {
+    public PhonebookAdapter(Activity activity, ArrayList<User> userList)
+    {
         this.activity=activity;
-        this.Name=name;
-        this.Id=id;
-        this.Contact=contact;
-
+        this.userList=userList;
     }
 
     @Override
     public int getCount() {
-        return Name.size();
+        return userList.size();
     }
 
     @Override
@@ -50,26 +49,30 @@ public class PhonebookAdapter extends BaseAdapter {
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
+    public View getView(int position, View convertView, ViewGroup parent)
+    {
         convertView= LayoutInflater.from(activity).inflate(R.layout.item_category,parent,false);
         txt1=convertView.findViewById(R.id.item_name);
         txt2=convertView.findViewById(R.id.item_contact);
 
         txt1.setText(Name.get(position));
         txt2.setText(Contact.get(position));
+//        int id=Id.get(position);
+//        String name=Name.get(position);
+//        String contact=Contact.get(position);
 
-//        txt1.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                System.out.println("Clicked");
-//                DBHelper dbHelper=new DBHelper(context);
-//                dbHelper.deleteData(Id.get(position));
-//                Id.remove(position);
-//                Contact.remove(position);
-//                Name.remove(position);
-//                notifyDataSetChanged();
-//            }
-//        });
+        txt1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Clicked");
+                DBHelper dbHelper=new DBHelper(activity);
+                dbHelper.deleteData(Id.get(position));
+                Id.remove(position);
+                Contact.remove(position);
+                Name.remove(position);
+                notifyDataSetChanged();
+            }
+        });
 
 
 
@@ -93,9 +96,9 @@ public class PhonebookAdapter extends BaseAdapter {
             {
                 DBHelper dbHelper=new DBHelper(activity);
                 Intent intent = new Intent(activity,MainActivity.class );
-                intent.putExtra("id",Id);
-                intent.putExtra("Name",Name);
-                intent.putExtra("Contact",Contact);
+                intent.putExtra("Id",Id.get(position));
+                intent.putExtra("Name",Name.get(position));
+                intent.putExtra("Contact",Contact.get(position));
                 activity.startActivity(intent);
                 activity.finish();
 

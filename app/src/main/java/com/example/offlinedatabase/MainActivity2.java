@@ -21,9 +21,10 @@ public class MainActivity2 extends AppCompatActivity {
     EditText etxtName,etxtContact;
     ListView listView;
     PhonebookAdapter phonebookAdapter;
-    ArrayList<String> Name =new ArrayList<String>();
-    ArrayList<String> Contact =new ArrayList<String>();
-    ArrayList<Integer> Id = new ArrayList<Integer>();
+    ArrayList<User> userList= new ArrayList<User>();
+//    ArrayList<String> Name =new ArrayList<String>();
+//    ArrayList<String> Contact =new ArrayList<String>();
+//    ArrayList<Integer> Id = new ArrayList<Integer>();
     //int[] Id;
 
     @Override
@@ -41,9 +42,12 @@ public class MainActivity2 extends AppCompatActivity {
         Cursor cursor=dbHelper.viewData();
         while (cursor.moveToNext())
         {
-            Id.add(cursor.getInt(0));
-            Name.add(cursor.getString(1));
-            Contact.add(cursor.getString(2));
+
+            int id=cursor.getInt(0);
+            String name=cursor.getString(1);
+            String contact=cursor.getString(2);
+            User user=new User(id,name,contact);
+            userList.add(user);
         }
 
 //        Id=getIntent().getIntArrayExtra("id");
@@ -51,7 +55,7 @@ public class MainActivity2 extends AppCompatActivity {
 //        Contact=getIntent().getStringArrayListExtra("Contact");
 
 
-        phonebookAdapter=new PhonebookAdapter(this,Name,Contact,Id);
+        phonebookAdapter=new PhonebookAdapter(this,userList);
         listView.setAdapter(phonebookAdapter);
 
         fab.setOnClickListener(new View.OnClickListener() {

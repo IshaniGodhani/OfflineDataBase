@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 import androidx.annotation.Nullable;
 
 import java.util.ArrayList;
+import java.util.jar.Attributes;
 
 public class DBHelper extends SQLiteOpenHelper
 {
@@ -15,6 +16,7 @@ public class DBHelper extends SQLiteOpenHelper
     public DBHelper(@Nullable Context context) {
         super(context, "PhoneBook", null, 1);
     }
+
 
     @Override
     public void onCreate(SQLiteDatabase db)
@@ -54,8 +56,11 @@ public class DBHelper extends SQLiteOpenHelper
         sqLiteDatabase.execSQL(query);
 
     }
-    public void updateData()
+    public void updateData(int id, String name, String contact)
     {
-
+        System.out.println("id="+id+"name="+name+"Contact="+contact);
+        String query="Update PhoneBook set name='"+name+"',contact='"+contact+"' where id='"+id+"'";
+        SQLiteDatabase sqLiteDatabase=getWritableDatabase();
+        sqLiteDatabase.execSQL(query);
     }
 }
